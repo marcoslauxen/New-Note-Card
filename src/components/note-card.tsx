@@ -2,6 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { X } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface NoteCardProps {
   note: {
@@ -13,6 +14,12 @@ interface NoteCardProps {
 }
 
 export function NoteCard({ note, onNoteDeleted }: NoteCardProps) {
+
+  const handleNoteDeleted = (id: string) => {
+    onNoteDeleted(id);
+    toast.success('Nota excluída com sucesso!');
+  }
+
   return (
     <Dialog.Root>
       <Dialog.Trigger className="text-left flex flex-col rounded-md bg-slate-800 p-5 gap-3 overflow-hidden relative outline-none hover:ring-2 hover:ring-slate-600 focus-visible:ring-2 focus-visible:ring-lime-400">
@@ -33,7 +40,7 @@ export function NoteCard({ note, onNoteDeleted }: NoteCardProps) {
             <p className="text-sm leading-6 text-slate-400">{note.content}</p>
           </div>
 
-          <button type="button" onClick={() => onNoteDeleted(note.id)} className="w-full bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none font-medium group">Deseja <span className="text-red-400 group-hover:underline">apagar essa nota</span>?</button>
+          <button type="button" onClick={() => handleNoteDeleted(note.id)} className="w-full bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none font-medium group">Deseja <span className="text-red-400 group-hover:underline">apagar essa nota</span>?</button>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
